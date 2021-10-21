@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head></head>
+   <body>
+      
+     
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+		
+      <h3>Students (<a href = "{{ url_for('register') }}">Add Student
+         </a>)</h3>
+      
+       {{students}}
+
+      <table>
+         <thead>
+            <tr>
+               <th>Email Id</th>
+               <th>Password</th>
+               
+            </tr>
+         </thead>
+      </table>
+      
+   </body>
+</html>
