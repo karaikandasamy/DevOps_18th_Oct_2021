@@ -59,17 +59,8 @@ def show_all():
    print(students.query.all())
    return render_template('show_all.html', students = students.query.all() )
 
-##********
-##[11:07 AM] Sathyajith K P
-##def erase(id):    
-# deletes the data on the basis of unique id and   
-#  # directs to show details page   
-#  data = Employees.query.get(id)   
-#  db.session.delete(data)    
-# db.session.commit()   
-#  return render_template('show_employee.html', employees=Employees.query.all())
+##### Code deletes a particular record ####
 
-##*******
 @app.route('/delete_one/<id>')
 def delete_one(id):
    data = students.query.get(id)
@@ -86,6 +77,7 @@ def delete_one(id):
 def edit_one(id):
    if request.method == 'POST':
       if not request.form['email_Id']:
+         ### add validation for the email Id - gowthami
          flash('Please enter proper email Id', 'error')
       else:
          email_Id = request.form['email_Id']
