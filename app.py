@@ -100,7 +100,7 @@ def edit_one(id):
             
    return render_template('edit_one.html',result = students.query.get(id))
 
-
+### Added comment
 
 @app.route('/delete_all')
 def delete_all():
