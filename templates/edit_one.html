@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+   <body>
+   
+      <h3>Students - Registration</h3>
+      <hr/>
+      
+      {%- for category, message in get_flashed_messages(with_categories = true) %}
+         <div class = "alert alert-danger">
+            {{ message }}
+         </div>
+      {%- endfor %}
+      
+      <form action = "{{ request.path }}" method = "post">
+         <label for = "email_Id">EmailId</label><br>
+         <input type = "text" name = "email_Id" placeholder = "email_Id" value="{{result.email_Id}}"/><br>
+         <input type = "submit" value = "Submit" />
+      </form>
+      
+   </body>
+</html>

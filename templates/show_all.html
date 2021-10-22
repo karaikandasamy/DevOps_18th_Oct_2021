@@ -12,7 +12,9 @@
 
     body {
 
-        background-color: #fafafa
+        background-color: #fafafa;
+        overflow-x:auto
+
 
     }
 
@@ -27,6 +29,7 @@
 </head>
 
 <body>
+
   <h3>
          <a href = "{{ url_for('show_all') }}">All Registered Students </a>
       </h3>
@@ -43,14 +46,14 @@
     <div class="container">
 
     <h1 class="w3-padding-16 w3-center">Student Data</h1>
-
+     <div >
         <table class="w3-table w3-striped w3-white w3-padding" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
 
             <tr style="background-color: #6e44ff;color: #ffffff">
                 
                 <th class="w3-center"> Id </th>
                 <th class="w3-center"> Email Id</th>
-            <!--   <th class="w3-center"> Password</th> -->
+                <th class="w3-center"> Password</th>
                 <th class="w3-center"> Edit </th>
                 <th class="w3-center"> Delete </th>
 
@@ -64,9 +67,11 @@
 
                     <td class="w3-center">{{ student.email_Id}}</td>
 
-                    <td class="w3-center"><a href = "{{ url_for('edit_One') }}">Edit </a></td>
+                    <td class="w3-center">{{ student.password}}</td>
 
-                    <td class="w3-center"><a href = "{{ url_for('delete_One') }}"> Delete </a></td>
+                    <td class="w3-center"><a href = "/edit_one/{{student.id }}">Edit </a></td>
+
+                    <td class="w3-center"><a href = "/delete_one/{{student.id }}"> Delete </a></td>
 
             <!---        <td class="w3-center">  </td>
 
@@ -80,7 +85,7 @@
           
 
         </table>
-
+    </div>
     </div>
 
 

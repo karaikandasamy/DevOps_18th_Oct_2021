@@ -1,6 +1,8 @@
 from flask import Flask, request, flash, url_for, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+### importing regex library from base python itself
+import re
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.sqlite3'
@@ -38,7 +40,6 @@ def register():
       else:
          email_Id = request.form['email_Id']
          password = request.form['password']
-         #result = db.session.query((students.email_Id==email_Id)).scalar()
          data = students.query.filter_by(email_Id=email_Id).first()
          if data is None:
             ## It is a strange syntax to initialize the fields
@@ -58,15 +59,56 @@ def show_all():
    print(students.query.all())
    return render_template('show_all.html', students = students.query.all() )
 
-@app.route('/delete_One')
-def delete_One():
-   print(students.query.all())
+##********
+##[11:07 AM] Sathyajith K P
+##def erase(id):    
+# deletes the data on the basis of unique id and   
+#  # directs to show details page   
+#  data = Employees.query.get(id)   
+#  db.session.delete(data)    
+# db.session.commit()   
+#  return render_template('show_employee.html', employees=Employees.query.all())
+
+##*******
+@app.route('/delete_one/<id>')
+def delete_one(id):
+   data = students.query.get(id)
+   print("", vars(data))
+   ### deletes the student with the given id
+   if data:
+      db.session.delete(data)
+      db.session.commit()
+   #print(students.query.all())
+   flash("Selected student is successfully deleted from the database!!!!")
    return render_template('show_all.html', students = students.query.all() )
 
-@app.route('/edit_One')
-def edit_One():
-   print(students.query.all())
-   return render_template('show_all.html', students = students.query.all() )
+@app.route('/edit_one/<id>' , methods = ['GET', 'POST'])
+def edit_one(id):
+   if request.method == 'POST':
+      if not request.form['email_Id']:
+         flash('Please enter proper email Id', 'error')
+      else:
+         email_Id = request.form['email_Id']
+         student = students.query.get(id)
+         
+         if student :
+            data = students.query.filter_by(email_Id=email_Id).first()
+
+            if data is None:
+               student.email_Id = email_Id
+               db.session.commit()
+               flash('Record is successfully updated')
+               return redirect(url_for("show_all"))
+            else:
+               flash('Use a different Email ID !!! Email Id is not available for registration!!!!')
+              
+         else:
+            flash('Student does not exist!!!!')
+            flash('Please use the correct password to log in!!!!')
+            
+   return render_template('edit_one.html',result = students.query.get(id))
+
+
 
 @app.route('/delete_all')
 def delete_all():
